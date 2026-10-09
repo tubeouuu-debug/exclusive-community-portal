@@ -1,0 +1,3237 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Exclusive Community Portal - VIP Archive & Anti-Piracy Reader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --font-body: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-heading: 'Playfair Display', Georgia, serif;
+      
+      /* Dark Theme */
+      --bg-base: #0d0f15;
+      --bg-surface: #141722;
+      --bg-card: #1a1e2c;
+      --bg-card-hover: #212638;
+      --bg-glass: rgba(20, 23, 34, 0.88);
+      
+      --text-main: #f0f3fa;
+      --text-muted: #9aa3ba;
+      --text-dim: #636c84;
+      
+      --accent-gold: #e5b869;
+      --accent-gold-hover: #f3ca82;
+      --accent-gold-dim: rgba(229, 184, 105, 0.12);
+      --accent-rose: #ea8a8a;
+      --accent-green: #48bb78;
+      
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-highlight: rgba(229, 184, 105, 0.35);
+      
+      --shadow-sm: 0 4px 12px rgba(0,0,0,0.3);
+      --shadow-md: 0 10px 30px rgba(0,0,0,0.45);
+      --shadow-lg: 0 20px 50px rgba(0,0,0,0.6);
+      
+      --sidebar-width: 320px;
+      --header-height: 70px;
+      --content-max-w: 860px;
+      --base-font-size: 16px;
+    }
+
+    [data-theme="light"] {
+      --bg-base: #f7f6f2;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-hover: #faf9f6;
+      --bg-glass: rgba(255, 255, 255, 0.92);
+      
+      --text-main: #1d2129;
+      --text-muted: #5e6475;
+      --text-dim: #9aa0b2;
+      
+      --accent-gold: #b8862d;
+      --accent-gold-hover: #9c6e1e;
+      --accent-gold-dim: rgba(184, 134, 45, 0.08);
+      
+      --border-subtle: rgba(0, 0, 0, 0.08);
+      --border-highlight: rgba(184, 134, 45, 0.3);
+      
+      --shadow-sm: 0 2px 10px rgba(0,0,0,0.05);
+      --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
+      --shadow-lg: 0 20px 40px rgba(0,0,0,0.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html {
+      font-size: var(--base-font-size);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      line-height: 1.8;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    #reading-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-gold), var(--accent-rose));
+      width: 0%;
+      z-index: 9999;
+      transition: width 0.1s ease-out;
+    }
+
+    /* HEADER */
+    header {
+      position: sticky;
+      top: 0;
+      height: var(--header-height);
+      background: var(--bg-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-gold);
+      object-fit: cover;
+      box-shadow: 0 0 12px rgba(229, 184, 105, 0.35);
+    }
+
+    .brand-info h1 {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .vip-badge {
+      font-family: var(--font-body);
+      background: linear-gradient(135deg, #e5b869, #ea8a8a);
+      color: #0c0e14;
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 20px;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+
+    .admin-badge {
+      font-family: var(--font-body);
+      background: var(--accent-green);
+      color: #0c0e14;
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 20px;
+      letter-spacing: 0.8px;
+      display: none;
+    }
+
+    .brand-info p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-action {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      height: 38px;
+      padding: 0 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-action:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-highlight);
+      transform: translateY(-1px);
+    }
+
+    .btn-action:active {
+      transform: scale(0.97);
+    }
+
+    .btn-admin-active {
+      border-color: var(--accent-green) !important;
+      color: var(--accent-green) !important;
+      background: rgba(72, 187, 120, 0.15) !important;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-main);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    /* MAIN WRAPPER */
+    .app-container {
+      display: flex;
+      flex: 1;
+      width: 100%;
+      position: relative;
+    }
+
+    /* SIDEBAR (DESKTOP & BASE) */
+    aside.sidebar {
+      width: var(--sidebar-width);
+      background: var(--bg-surface);
+      border-right: 1px solid var(--border-subtle);
+      height: calc(100vh - var(--header-height));
+      height: calc(100dvh - var(--header-height));
+      position: sticky;
+      top: var(--header-height);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-y: contain;
+      padding: 20px 16px;
+      padding-bottom: calc(100px + env(safe-area-inset-bottom, 20px));
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 90;
+      transition: transform 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    .search-box {
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 10px 14px 10px 38px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      outline: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .search-box input:focus {
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 0 3px var(--accent-gold-dim);
+    }
+
+    .search-box svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      pointer-events: none;
+    }
+
+    .sidebar-section-title {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--text-dim);
+      font-weight: 700;
+      padding-left: 8px;
+      margin-bottom: 8px;
+    }
+
+    .parts-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .part-btn {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      padding: 12px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      font-size: 0.92rem;
+      font-weight: 500;
+      gap: 8px;
+    }
+
+    .part-btn:hover {
+      background: var(--bg-card);
+      color: var(--text-main);
+    }
+
+    .part-btn.active {
+      background: var(--accent-gold-dim);
+      border-color: var(--border-highlight);
+      color: var(--accent-gold);
+      font-weight: 600;
+    }
+
+    .part-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .part-name-text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .part-badge {
+      font-size: 0.72rem;
+      padding: 2px 7px;
+      border-radius: 8px;
+      background: var(--bg-card);
+      color: var(--text-dim);
+      flex-shrink: 0;
+    }
+
+    .part-btn.active .part-badge {
+      background: var(--accent-gold);
+      color: #0c0e14;
+      font-weight: 700;
+    }
+
+    /* MAIN CONTENT */
+    main.content-area {
+      flex: 1;
+      min-width: 0;
+      padding: 36px 40px 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .content-container {
+      width: 100%;
+      max-width: var(--content-max-w);
+    }
+
+    /* PART HERO */
+    .part-hero {
+      background: linear-gradient(135deg, var(--bg-surface), var(--bg-card));
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 32px 36px;
+      margin-bottom: 36px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .part-hero::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle, var(--accent-gold-dim), transparent 70%);
+      pointer-events: none;
+    }
+
+    .part-hero-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .part-hero-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .btn-edit-part-quick {
+      background: rgba(229, 184, 105, 0.15);
+      border: 1px solid var(--accent-gold);
+      color: var(--accent-gold);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: none; /* In admin mode */
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+
+    .btn-edit-part-quick:hover {
+      background: var(--accent-gold);
+      color: #0c0e14;
+    }
+
+    .part-hero h2 {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--text-main);
+      margin-bottom: 12px;
+    }
+
+    .part-hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    /* ARTICLES STREAM */
+    .articles-stream {
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    .article-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 34px 38px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .article-card:hover {
+      border-color: rgba(229, 184, 105, 0.3);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .article-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-subtle);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .article-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      background: var(--accent-gold-dim);
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid var(--border-highlight);
+    }
+
+    .article-meta-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-dim);
+      font-size: 0.82rem;
+    }
+
+    .article-title {
+      font-family: var(--font-heading);
+      font-size: 1.45rem;
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--text-main);
+      margin-bottom: 20px;
+    }
+
+    /* SEMANTIC ARTICLE BODY TYPOGRAPHY */
+    .article-body {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--text-main);
+      word-break: break-word;
+    }
+
+    .article-body p {
+      margin-bottom: 18px;
+    }
+
+    .article-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .article-body ul, .article-body ol {
+      margin: 16px 0 20px 24px;
+    }
+
+    .article-body li {
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .article-body blockquote {
+      border-left: 3px solid var(--accent-gold);
+      padding: 12px 18px;
+      margin: 20px 0;
+      color: var(--text-muted);
+      font-style: italic;
+      background: var(--accent-gold-dim);
+      border-radius: 0 10px 10px 0;
+      line-height: 1.8;
+    }
+
+    /* GALLERY OF SCREENSHOTS */
+    .article-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+      padding: 14px;
+      background: var(--bg-surface);
+      border-radius: 16px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .article-gallery.single-img {
+      grid-template-columns: minmax(280px, 520px);
+      justify-content: center;
+    }
+
+    .gallery-img-wrap {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-base);
+      cursor: zoom-in;
+      transition: all 0.25s ease;
+      aspect-ratio: 16/10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gallery-img-wrap:hover {
+      border-color: var(--accent-gold);
+      transform: scale(1.02);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .gallery-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ARTICLE FOOTER */
+    .article-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .article-footer-author {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .author-tiny-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+    }
+
+    .article-footer-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-icon-subtle {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      transition: all 0.2s;
+    }
+
+    .btn-icon-subtle:hover {
+      border-color: var(--border-highlight);
+      color: var(--accent-gold);
+    }
+
+    .btn-edit-post {
+      background: rgba(72, 187, 120, 0.15);
+      border: 1px solid var(--accent-green);
+      color: var(--accent-green);
+      display: none; /* Only in Admin mode */
+      font-weight: 600;
+    }
+
+    /* PASSWORD LOCK OVERLAY */
+    .lock-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 12, 18, 0.94);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .lock-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .lock-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-highlight);
+      border-radius: 24px;
+      padding: 44px 38px;
+      width: 100%;
+      max-width: 440px;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      animation: lockAppear 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes lockAppear {
+      from { transform: scale(0.92) translateY(20px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+
+    .lock-icon-wrap {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 20px;
+      background: var(--accent-gold-dim);
+      border: 2px solid var(--accent-gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-gold);
+      box-shadow: 0 0 25px rgba(229, 184, 105, 0.3);
+    }
+
+    .lock-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+      color: var(--text-main);
+    }
+
+    .lock-card p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 26px;
+    }
+
+    .lock-input-group {
+      position: relative;
+      margin-bottom: 18px;
+    }
+
+    .lock-input-group input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-size: 1.05rem;
+      color: var(--text-main);
+      text-align: center;
+      letter-spacing: 2px;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .lock-input-group input:focus {
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 0 4px var(--accent-gold-dim);
+    }
+
+    .btn-unlock {
+      width: 100%;
+      background: linear-gradient(135deg, #e5b869, #df9b53);
+      color: #0c0e14;
+      border: none;
+      border-radius: 14px;
+      padding: 14px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 6px 20px rgba(229, 184, 105, 0.35);
+    }
+
+    .btn-unlock:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(229, 184, 105, 0.5);
+    }
+
+    .lock-error {
+      color: var(--accent-rose);
+      font-size: 0.82rem;
+      margin-top: 12px;
+      min-height: 20px;
+    }
+
+    .lock-hint {
+      margin-top: 20px;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 14px;
+      line-height: 1.5;
+    }
+
+    /* DISCORD AUTH BUTTON & STYLES */
+    .btn-discord-login {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      background: #5865F2;
+      color: #ffffff !important;
+      padding: 14px 20px;
+      border-radius: 14px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      box-shadow: 0 6px 20px rgba(88, 101, 242, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-sizing: border-box;
+      cursor: pointer;
+    }
+    .btn-discord-login:hover {
+      background: #4752c4;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(88, 101, 242, 0.5);
+    }
+    .btn-discord-login svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    .auth-alert-box {
+      background: rgba(234, 138, 138, 0.15);
+      border: 1px solid var(--accent-rose);
+      color: var(--accent-rose);
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      text-align: left;
+      display: none;
+    }
+    .auth-alert-box.show {
+      display: block;
+      animation: shake 0.4s ease;
+    }
+
+    /* USER PROFILE PILL IN HEADER */
+    .user-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-highlight);
+      border-radius: 30px;
+      padding: 4px 12px 4px 6px;
+      font-size: 0.82rem;
+    }
+    .user-pill-avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid var(--accent-gold);
+    }
+    .user-pill-info {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      line-height: 1.15;
+    }
+    .user-pill-name {
+      font-weight: 600;
+      color: var(--text-main);
+      max-width: 110px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .user-pill-badge {
+      font-size: 0.62rem;
+      color: var(--accent-gold);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .btn-logout {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      text-decoration: none;
+      margin-left: 2px;
+      padding: 2px 4px;
+      border-radius: 4px;
+      transition: color 0.2s;
+      display: inline-flex;
+      align-items: center;
+    }
+    .btn-logout:hover {
+      color: var(--accent-rose);
+    }
+
+    /* EDIT ARTICLE MODAL (ADMIN) */
+    .edit-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 12, 18, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      z-index: 10002;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s ease;
+    }
+
+    .edit-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .edit-panel {
+      width: 100%;
+      max-width: 720px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-highlight);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      max-height: 90vh;
+      max-height: 90dvh;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .edit-header {
+      padding: 16px 22px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .edit-header h4 {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      color: var(--accent-gold);
+    }
+
+    .edit-body {
+      padding: 20px 22px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .edit-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .edit-input, .edit-textarea {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 12px 14px;
+      color: var(--text-main);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .edit-textarea {
+      min-height: 180px;
+      line-height: 1.7;
+      resize: vertical;
+    }
+
+    .edit-input:focus, .edit-textarea:focus {
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 0 3px var(--accent-gold-dim);
+    }
+
+    /* PHOTO UPLOAD & MANAGEMENT STYLES */
+    .photo-upload-container {
+      background: var(--bg-card);
+      border: 1.5px dashed var(--border-highlight);
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .photo-upload-container:hover {
+      border-color: var(--accent-gold);
+      background: var(--bg-card-hover);
+    }
+
+    .photo-upload-btn-group {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .edit-imgs-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .edit-img-item {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4/3;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-base);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .edit-img-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .btn-remove-img {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: rgba(220, 38, 38, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: white;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      transition: transform 0.15s;
+    }
+
+    .btn-remove-img:active {
+      transform: scale(0.9);
+    }
+
+    .edit-footer {
+      padding: 14px 22px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+
+    .edit-footer-right {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-save-edit {
+      background: var(--accent-green);
+      color: #0c0e14;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .btn-save-edit:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    /* RENAME PARTS MODAL LIST */
+    .rename-part-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg-card);
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .rename-part-row span {
+      font-weight: 700;
+      color: var(--accent-gold);
+      min-width: 65px;
+      font-size: 0.88rem;
+    }
+
+    /* LIGHTBOX MODAL */
+    .lightbox-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 10001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .lightbox-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: var(--shadow-lg);
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+    }
+
+    .lightbox-modal.active .lightbox-img {
+      transform: scale(1);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 24px;
+      right: 28px;
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      color: white;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .lightbox-close:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.1);
+    }
+
+    /* SEARCH MODAL */
+    .search-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 12, 18, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      padding: 80px 20px 40px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s ease;
+    }
+
+    .search-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .search-panel {
+      width: 100%;
+      max-width: 680px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      max-height: 80vh;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .search-header {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .search-header input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 1.1rem;
+      color: var(--text-main);
+    }
+
+    .search-results {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .search-item {
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: var(--bg-card);
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .search-item:hover {
+      border-color: var(--border-highlight);
+      background: var(--bg-card-hover);
+    }
+
+    .search-item-part {
+      font-size: 0.72rem;
+      color: var(--accent-gold);
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .search-item-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .search-item-text {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    mark {
+      background: var(--accent-gold-dim);
+      color: var(--accent-gold);
+      font-weight: 600;
+      padding: 0 2px;
+      border-radius: 3px;
+    }
+
+    /* FLOATING ADMIN ACTION DOCK (FAB) */
+    .admin-floating-dock {
+      position: fixed;
+      bottom: calc(20px + env(safe-area-inset-bottom, 16px));
+      right: 18px;
+      z-index: 9995;
+      display: none; /* In Admin mode */
+      align-items: center;
+      gap: 8px;
+      background: rgba(18, 22, 34, 0.94);
+      border: 1.5px solid var(--accent-gold);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 6px 10px;
+      border-radius: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(229, 184, 105, 0.25);
+      animation: fabAppear 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes fabAppear {
+      from { transform: scale(0.8) translateY(20px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+
+    .btn-fab-pill {
+      background: linear-gradient(135deg, #e5b869, #df9b53);
+      color: #0c0e14;
+      border: none;
+      font-weight: 700;
+      font-size: 0.86rem;
+      padding: 8px 16px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(229, 184, 105, 0.35);
+      transition: all 0.2s;
+    }
+
+    .btn-fab-pill:active {
+      transform: scale(0.95);
+    }
+
+    .btn-fab-round {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-fab-round:active {
+      transform: scale(0.95);
+      border-color: var(--accent-gold);
+    }
+
+    /* RESPONSIVE DESIGN - OPTIMIZED FOR PHONES & SAFARI TOOLBAR */
+    @media (max-width: 900px) {
+      aside.sidebar {
+        position: fixed;
+        left: 0;
+        top: var(--header-height);
+        width: 86vw;
+        max-width: 320px;
+        height: calc(100vh - var(--header-height));
+        height: calc(100dvh - var(--header-height));
+        transform: translateX(-100%);
+        box-shadow: var(--shadow-lg);
+        z-index: 9990;
+        padding-bottom: calc(140px + env(safe-area-inset-bottom, 30px));
+      }
+
+      aside.sidebar.open {
+        transform: translateX(0);
+      }
+
+      main.content-area {
+        padding: 20px 14px 100px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --header-height: 56px;
+      }
+
+      header {
+        padding: 0 10px;
+        height: 56px;
+        gap: 6px;
+      }
+
+      .menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        font-size: 1.35rem;
+        padding: 0;
+        flex-shrink: 0;
+      }
+
+      .brand {
+        gap: 8px;
+        min-width: 0;
+        flex-shrink: 1;
+      }
+
+      .brand-avatar {
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+      }
+
+      .brand-info {
+        min-width: 0;
+      }
+
+      .brand-info h1 {
+        font-size: 0.95rem;
+        white-space: nowrap;
+        gap: 0;
+      }
+
+      /* Hide subtitles, badges in top bar on mobile */
+      .brand-info p,
+      .vip-badge,
+      .admin-badge {
+        display: none !important;
+      }
+
+      /* Header actions on mobile */
+      .header-actions {
+        gap: 5px;
+        flex-shrink: 0;
+      }
+
+      /* On mobile, regular text hidden, icons stay compact */
+      .btn-action {
+        width: 34px;
+        height: 34px;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9px;
+      }
+
+      .btn-action span {
+        display: none !important; /* Icons only in header on mobile */
+      }
+
+      /* Hide font size & lock button from top header on mobile (reside in drawer) */
+      #fontSizeBtn,
+      #lockBtn {
+        display: none !important;
+      }
+
+      /* Compact User Pill on mobile */
+      .user-pill {
+        padding: 2px 7px 2px 4px;
+        gap: 5px;
+        height: 32px;
+        border-radius: 20px;
+      }
+
+      .user-pill-avatar {
+        width: 22px;
+        height: 22px;
+      }
+
+      .user-pill-name {
+        max-width: 58px;
+        font-size: 0.72rem;
+      }
+
+      .user-pill-badge {
+        display: none !important;
+      }
+
+      .btn-logout {
+        font-size: 0.78rem;
+        padding: 0 2px;
+      }
+
+      /* Mobile Sidebar Drawer */
+      aside.sidebar {
+        width: 86vw;
+        max-width: 320px;
+        height: calc(100vh - 56px);
+        height: calc(100dvh - 56px);
+        top: 56px;
+        padding: 14px 12px;
+        padding-bottom: calc(160px + env(safe-area-inset-bottom, 30px));
+      }
+
+      .sidebar-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 9980;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.25s ease;
+      }
+
+      .sidebar-backdrop.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .sidebar-mobile-tools {
+        display: block !important;
+      }
+
+      /* Content Area on Mobile */
+      main.content-area {
+        padding: 14px 8px 100px;
+      }
+
+      .part-hero {
+        padding: 20px 14px;
+        border-radius: 16px;
+        margin-bottom: 18px;
+      }
+
+      .part-hero h2 {
+        font-size: 1.3rem;
+      }
+
+      .part-hero-meta {
+        gap: 6px;
+        font-size: 0.74rem;
+        flex-wrap: wrap;
+      }
+
+      .article-card {
+        padding: 16px 12px;
+        border-radius: 16px;
+      }
+
+      .article-title {
+        font-size: 1.15rem;
+        margin-bottom: 14px;
+      }
+
+      .article-body {
+        font-size: 0.98rem;
+        line-height: 1.82;
+      }
+
+      .article-gallery {
+        grid-template-columns: 1fr;
+        padding: 10px;
+        gap: 10px;
+      }
+
+      /* Modal footer stacking on small mobile */
+      .edit-footer {
+        flex-direction: column-reverse;
+        gap: 8px;
+      }
+
+      .edit-footer button,
+      .edit-footer-right {
+        width: 100%;
+      }
+
+      .btn-save-edit {
+        width: 100%;
+        padding: 12px;
+        text-align: center;
+        justify-content: center;
+      }
+    }
+
+    /* LANDSCAPE MOBILE OPTIMIZATIONS */
+    @media (orientation: landscape) and (max-height: 520px) {
+      :root {
+        --header-height: 50px;
+      }
+      header {
+        height: 50px;
+        padding: 0 12px;
+      }
+      .brand-info p {
+        display: none !important;
+      }
+      .brand-avatar {
+        width: 28px;
+        height: 28px;
+      }
+      .brand-info h1 {
+        font-size: 0.95rem;
+      }
+      .btn-action span {
+        display: none !important;
+      }
+      .edit-panel {
+        max-height: 94vh;
+        max-height: 94dvh;
+      }
+      .edit-body {
+        padding: 12px 16px;
+        gap: 12px;
+      }
+      .edit-textarea {
+        min-height: 120px;
+      }
+    }
+
+    /* SIDEBAR MOBILE TOOLS BLOCK */
+    .sidebar-mobile-tools {
+      display: none;
+      padding: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      margin-bottom: 6px;
+    }
+
+    .mobile-tools-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .btn-mobile-tool {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 8px 4px;
+      border-radius: 9px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-mobile-tool .tool-icon {
+      font-size: 1.1rem;
+    }
+
+    .btn-mobile-tool:active {
+      transform: scale(0.96);
+      border-color: var(--accent-gold);
+    }
+
+    /* SIDEBAR MOBILE ADMIN SUITE */
+    .sidebar-mobile-admin-suite {
+      display: none; /* When Admin mode is on */
+      padding: 12px;
+      background: rgba(72, 187, 120, 0.08);
+      border: 1.5px solid var(--accent-green);
+      border-radius: 14px;
+      margin-bottom: 6px;
+    }
+
+    .sidebar-mobile-admin-suite .sidebar-section-title {
+      color: var(--accent-green);
+      margin-bottom: 8px;
+    }
+
+    .admin-suite-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .btn-admin-suite-action {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 9px 12px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+      text-align: left;
+    }
+
+    .btn-admin-suite-action:active {
+      transform: scale(0.97);
+      border-color: var(--accent-gold);
+    }
+
+    /* ANTI-THEFT & COPYRIGHT PROTECTION */
+    body, .article-card, .article-body, .article-title, .gallery-img-wrap, img {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      user-drag: none;
+      -webkit-touch-callout: none;
+    }
+
+    input, textarea, [contenteditable="true"] {
+      -webkit-user-select: text !important;
+      -moz-user-select: text !important;
+      user-select: text !important;
+    }
+
+    @media print {
+      body {
+        display: none !important;
+      }
+    }
+
+    /* DYNAMIC WATERMARK OVERLAY */
+    .watermark-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999;
+      opacity: 1;
+      background-repeat: repeat;
+      background-size: 340px 200px;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='340' height='200' viewBox='0 0 340 200'><text x='20' y='110' transform='rotate(-22 20 110)' fill='%23cbd5e1' fill-opacity='0.22' font-family='-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif' font-weight='600' font-size='12' letter-spacing='1.5'>EXCLUSIVE VIP ARCHIVE • PRIVATE COMMUNITY PORTAL</text></svg>");
+    }
+
+    [data-theme="light"] .watermark-overlay {
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='340' height='200' viewBox='0 0 340 200'><text x='20' y='110' transform='rotate(-22 20 110)' fill='%23475569' fill-opacity='0.16' font-family='-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif' font-weight='600' font-size='12' letter-spacing='1.5'>EXCLUSIVE VIP ARCHIVE • PRIVATE COMMUNITY PORTAL</text></svg>");
+    }
+
+    /* SECURITY TOAST NOTICE */
+    .toast-notice {
+      position: fixed;
+      bottom: calc(30px + env(safe-area-inset-bottom, 10px));
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(18, 22, 32, 0.96);
+      color: var(--accent-gold);
+      border: 1px solid rgba(229, 184, 105, 0.4);
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      z-index: 10005;
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      max-width: 90vw;
+      text-align: center;
+    }
+
+    .toast-notice.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- DYNAMIC COPYRIGHT WATERMARK -->
+  <div class="watermark-overlay" id="watermarkOverlay"></div>
+
+  <!-- PROGRESS BAR -->
+  <div id="reading-progress"></div>
+
+  <!-- PASSWORD GATE OVERLAY (2-STEP VERIFICATION) -->
+  <div id="lockOverlay" class="lock-overlay">
+    <div class="lock-card">
+
+      <!-- DEMO PORTFOLIO ACCESS GATE -->
+      <div id="stepDiscordAuth">
+        <div class="lock-icon-wrap">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </div>
+        <h3>Exclusive VIP Portal</h3>
+        <p style="margin-bottom: 20px;">Cổng đọc bài viết độc quyền tích hợp cơ chế chống rò rỉ bản quyền (Anti-Piracy DRM) & Bộ công cụ Quản trị viên trực tiếp.</p>
+        
+        <!-- 1-CLICK DEMO BUTTONS -->
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px;">
+          <button type="button" class="btn-unlock" onclick="loginAsDemoUser()" style="display:flex;align-items:center;justify-content:center;gap:8px;">
+            <span>🚀 Xem Thử Giao Diện Đọc Bài (Demo Member)</span>
+          </button>
+          <button type="button" class="btn-unlock" onclick="loginAsDemoAdmin()" style="display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#3b82f6,#6366f1);box-shadow:0 4px 14px rgba(99,102,241,0.35);">
+            <span>⚙️ Xem Thử Chế Độ Quản Trị (Demo Admin)</span>
+          </button>
+        </div>
+
+        <div style="font-size:0.75rem;color:var(--text-dim);margin: 12px 0;">— HOẶC NHẬP PASSCODE DEMO —</div>
+
+        <form id="lockForm" onsubmit="handleUnlock(event)">
+          <div class="lock-input-group">
+            <input type="text" id="passInput" placeholder="Nhập DEMO2026 hoặc ADMIN_DEMO_2026..." autocomplete="off">
+          </div>
+          <button type="submit" class="btn-action" style="width:100%;padding:10px;font-weight:600;margin-top:4px;">Mở Khóa Bằng Mã</button>
+          <div id="lockError" class="lock-error"></div>
+        </form>
+
+        <div style="margin-top: 18px; font-size: 0.75rem; color: var(--text-dim); border-top: 1px solid var(--border-subtle); padding-top: 14px;">
+          <a href="https://auth-portal.tubeouuu.workers.dev/login" style="color:var(--text-muted);text-decoration:none;">
+            💬 Thử nghiệm xác thực Discord OAuth2 thật &rarr;
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+      <a href="#" class="brand">
+        <div class="brand-avatar" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--accent-gold),#f3ca82);color:#1a1e2c;font-weight:800;font-size:1.15rem;border-radius:50%;width:42px;height:42px;box-shadow:var(--shadow-sm);">💎</div>
+        <div class="brand-info">
+          <h1>
+            Exclusive VIP Portal
+            <span class="vip-badge">VIP ONLY</span>
+            <span class="admin-badge" id="adminBadge">BIÊN TẬP</span>
+          </h1>
+          <p>Private Publication Archive • Anti-Piracy DRM</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="header-actions">
+      <!-- User Profile Pill (Discord Logged In) -->
+      <div class="user-pill" id="userPill" style="display:none;">
+        <img id="userAvatar" src="" class="user-pill-avatar" alt="Avatar">
+        <div class="user-pill-info">
+          <span id="userName" class="user-pill-name">User</span>
+          <span class="user-pill-badge">HỘI VIÊN VIP</span>
+        </div>
+        <a href="javascript:discordLogout()" class="btn-logout" title="Đăng xuất tài khoản">✕</a>
+      </div>
+
+      <!-- Search Button -->
+      <button class="btn-action" onclick="openSearchModal()" title="Tìm bài viết (Ctrl+K)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <span>Tìm bài</span>
+      </button>
+
+      <!-- Admin Edit Toggle -->
+      <button class="btn-action" onclick="toggleAdminMode()" id="adminBtn" title="Chế độ Biên tập & Chỉnh sửa bài viết">
+        ✏️ <span>Biên tập</span>
+      </button>
+
+      <!-- Add New Post Button (Admin) -->
+      <button class="btn-action" onclick="openNewPostModal()" id="newPostBtn" style="display:none; color:var(--accent-gold);" title="Thêm bài viết mới">
+        ➕ <span>Thêm bài</span>
+      </button>
+
+      <!-- Rename Parts Button (Admin) -->
+      <button class="btn-action" onclick="openRenamePartsModal()" id="renamePartsBtn" style="display:none; color:var(--accent-gold);" title="Đổi tên các phần theo chủ đề">
+        🏷️ <span>Tên phần</span>
+      </button>
+
+      <!-- Export Edited Data (Admin) -->
+      <button class="btn-action" onclick="exportDataJs()" id="exportBtn" style="display:none; color:var(--accent-green);" title="Tải file data.js đã chỉnh sửa">
+        💾 <span>Xuất Data</span>
+      </button>
+
+      <!-- Font Size Adjuster -->
+      <button class="btn-action" onclick="adjustFontSize()" id="fontSizeBtn" title="Thay đổi cỡ chữ">
+        <span>A±</span>
+      </button>
+
+      <!-- Theme Switcher -->
+      <button class="btn-action" onclick="toggleTheme()" id="themeBtn" title="Chuyển chế độ Sáng / Tối">
+        🌙
+      </button>
+
+      <!-- Lock / Relock Button -->
+      <button class="btn-action" onclick="relockPage()" id="lockBtn" title="Khóa lại trang web">
+        🔒
+      </button>
+    </div>
+  </header>
+
+  <!-- APP CONTAINER -->
+  <div class="app-container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      
+      <!-- MOBILE ADMIN SUITE (CHỈ HIỆN KHI ĐANG Ở CHẾ ĐỘ BIÊN TẬP TRÊN MOBILE) -->
+      <div class="sidebar-mobile-admin-suite" id="sidebarMobileAdminSuite">
+        <div class="sidebar-section-title">👑 Bảng Quản Trị (Admin)</div>
+        <div class="admin-suite-grid">
+          <button class="btn-admin-suite-action" onclick="openNewPostModal(); toggleSidebar(false);">
+            <span>➕</span>
+            <span>Thêm bài viết mới</span>
+          </button>
+          <button class="btn-admin-suite-action" onclick="openRenamePartsModal(); toggleSidebar(false);">
+            <span>🏷️</span>
+            <span>Đổi tên các phần theo chủ đề</span>
+          </button>
+          <button class="btn-admin-suite-action" onclick="exportDataJs(); toggleSidebar(false);">
+            <span>💾</span>
+            <span>Xuất file Data.js mới</span>
+          </button>
+          <button class="btn-admin-suite-action" style="color:var(--accent-rose);" onclick="toggleAdminMode(); toggleSidebar(false);">
+            <span>🚪</span>
+            <span>Tắt chế độ Biên tập</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- MOBILE QUICK TOOLS & SETTINGS -->
+      <div class="sidebar-mobile-tools" id="sidebarMobileTools">
+        <div class="sidebar-section-title">Cài Đặt & Công Cụ</div>
+        <div class="mobile-tools-grid">
+          <button class="btn-mobile-tool" onclick="adjustFontSize()" title="Thay đổi cỡ chữ">
+            <span class="tool-icon">🔤</span>
+            <span>Cỡ chữ</span>
+          </button>
+          <button class="btn-mobile-tool" onclick="toggleAdminMode()" id="sidebarAdminToggleBtn" title="Chế độ Biên tập (Admin)">
+            <span class="tool-icon">✏️</span>
+            <span>Biên tập</span>
+          </button>
+          <button class="btn-mobile-tool" onclick="relockPage()" title="Khóa bảo vệ trang">
+            <span class="tool-icon">🔒</span>
+            <span>Khóa web</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="search-box">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" placeholder="Tìm kiếm nhanh bài viết..." onclick="openSearchModal()" readonly>
+      </div>
+
+      <div>
+        <div class="sidebar-section-title">Danh Mục 12 Phần</div>
+        <ul class="parts-list" id="partsNavList">
+          <!-- Populated by JS -->
+        </ul>
+      </div>
+
+      <!-- SPACER DÀNH RIÊNG ĐỂ TRÁNH THANH ĐIỀU HƯỚNG DƯỚI CỦA SAFARI/CHROME -->
+      <div style="height: 120px; min-height: 120px; width: 100%; flex-shrink: 0;" aria-hidden="true"></div>
+
+      <div style="margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border-subtle); font-size: 0.75rem; color: var(--text-dim); text-align: center;">
+        Dành riêng cho Hội viên VIP Community
+      </div>
+    </aside>
+
+    <!-- BACKDROP FOR MOBILE SIDEBAR DRAWER -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar(false)"></div>
+
+    <!-- CONTENT -->
+    <main class="content-area">
+      <div class="content-container">
+        <!-- HERO FOR ACTIVE PART -->
+        <div class="part-hero" id="partHero">
+          <div class="part-hero-header-row">
+            <span class="part-hero-tag" id="heroTag">Phần 1</span>
+            <button class="btn-edit-part-quick" id="quickEditPartBtn" onclick="quickEditCurrentPartTitle()" title="Đổi tên phần này">
+              ✏️ Đổi tên phần
+            </button>
+          </div>
+          <h2 id="heroTitle">Tuyển Tập Bài Viết</h2>
+          <div class="part-hero-meta" id="heroMeta">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- ARTICLES STREAM -->
+        <div class="articles-stream" id="articlesStream">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- FLOATING ADMIN ACTION DOCK (CHO PHÉP CHỊ MI THAO TÁC NGAY TRÊN ĐIỆN THOẠI DỌC) -->
+  <div class="admin-floating-dock" id="adminFloatingDock">
+    <button class="btn-fab-pill" onclick="openNewPostModal()" title="Thêm bài viết mới vào web">
+      <span>➕ Thêm bài</span>
+    </button>
+    <button class="btn-fab-round" onclick="openRenamePartsModal()" title="Đổi tên các phần theo chủ đề">
+      <span>🏷️</span>
+    </button>
+    <button class="btn-fab-round" onclick="exportDataJs()" title="Xuất file data.js mới">
+      <span>💾</span>
+    </button>
+  </div>
+
+  <!-- EDIT ARTICLE MODAL (ADMIN) -->
+  <div class="edit-modal" id="editModal">
+    <div class="edit-panel">
+      <div class="edit-header">
+        <h4>✏️ Chỉnh Sửa Bài Viết</h4>
+        <button class="btn-action" style="padding:0 8px;" onclick="closeEditModal()">&times;</button>
+      </div>
+      <div class="edit-body">
+        <!-- CHUYỂN BÀI VIẾT SANG PHẦN KHÁC (TÍNH NĂNG MỚI) -->
+        <div>
+          <label class="edit-label">📁 Di chuyển bài viết sang phần:</label>
+          <select id="editMovePartSelect" class="edit-input" style="background:var(--bg-card);color:var(--text-main);cursor:pointer;font-weight:600;">
+            <!-- Populated by JS -->
+          </select>
+        </div>
+
+        <div>
+          <label class="edit-label">Tiêu đề bài viết (để trống nếu không muốn hiện tiêu đề riêng):</label>
+          <input type="text" id="editTitleInput" class="edit-input" placeholder="Nhập tiêu đề bài viết...">
+        </div>
+        <div>
+          <label class="edit-label">Nội dung bài viết:</label>
+          <textarea id="editTextarea" class="edit-textarea" placeholder="Nhập nội dung bài viết..."></textarea>
+        </div>
+
+        <!-- HÌNH ẢNH ĐÍNH KÈM (THÊM / TẢI LÊN / XÓA BỚT ẢNH) -->
+        <div>
+          <label class="edit-label">Hình ảnh đính kèm:</label>
+          <div class="photo-upload-container">
+            <input type="file" id="editPhotoFileInput" accept="image/*" multiple style="display:none;" onchange="handleImageFiles(this.files, 'edit')">
+            <div class="photo-upload-btn-group">
+              <button type="button" class="btn-action" style="color:var(--accent-gold);border-color:var(--border-highlight);" onclick="document.getElementById('editPhotoFileInput').click()">
+                📸 Tải ảnh từ điện thoại / máy tính
+              </button>
+              <button type="button" class="btn-action" onclick="promptAddImageUrl('edit')">
+                🔗 Thêm link ảnh
+              </button>
+            </div>
+            <div style="font-size:0.75rem;color:var(--text-dim);margin-top:6px;">
+              Hỗ trợ chọn nhiều ảnh cùng lúc • Tự động tối ưu dung lượng siêu nhẹ
+            </div>
+          </div>
+
+          <div class="edit-imgs-list" id="editImgsList">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+      <div class="edit-footer">
+        <button class="btn-action" onclick="resetArticleToOriginal()" style="color:var(--accent-rose);">Khôi phục gốc</button>
+        <div class="edit-footer-right">
+          <button class="btn-action" onclick="closeEditModal()">Hủy</button>
+          <button class="btn-save-edit" onclick="saveArticleEdit()">💾 Lưu Thay Đổi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEW POST MODAL (ADMIN) -->
+  <div class="edit-modal" id="newPostModal">
+    <div class="edit-panel">
+      <div class="edit-header">
+        <h4>➕ Thêm Bài Viết Mới</h4>
+        <button class="btn-action" style="padding:0 8px;" onclick="closeNewPostModal()">&times;</button>
+      </div>
+      <div class="edit-body">
+        <div>
+          <label class="edit-label">Chọn Phần lưu bài:</label>
+          <select id="newPostPartSelect" class="edit-input" style="background:var(--bg-card);color:var(--text-main);cursor:pointer;font-weight:600;">
+            <!-- Populated by JS -->
+          </select>
+        </div>
+        <div>
+          <label class="edit-label">Tiêu đề bài viết (không bắt buộc):</label>
+          <input type="text" id="newPostTitleInput" class="edit-input" placeholder="Nhập tiêu đề bài viết...">
+        </div>
+        <div>
+          <label class="edit-label">Nội dung bài viết (dán trực tiếp từ Discord sang):</label>
+          <textarea id="newPostTextarea" class="edit-textarea" style="min-height:200px;" placeholder="Dán nội dung bài viết vào đây..."></textarea>
+        </div>
+
+        <!-- HÌNH ẢNH KHI TẠO MỚI -->
+        <div>
+          <label class="edit-label">Hình ảnh đính kèm (nếu có):</label>
+          <div class="photo-upload-container">
+            <input type="file" id="newPostPhotoFileInput" accept="image/*" multiple style="display:none;" onchange="handleImageFiles(this.files, 'new')">
+            <div class="photo-upload-btn-group">
+              <button type="button" class="btn-action" style="color:var(--accent-gold);border-color:var(--border-highlight);" onclick="document.getElementById('newPostPhotoFileInput').click()">
+                📸 Tải ảnh từ điện thoại / máy tính
+              </button>
+              <button type="button" class="btn-action" onclick="promptAddImageUrl('new')">
+                🔗 Thêm link ảnh
+              </button>
+            </div>
+            <div style="font-size:0.75rem;color:var(--text-dim);margin-top:6px;">
+              Hỗ trợ chọn nhiều ảnh cùng lúc
+            </div>
+          </div>
+
+          <div class="edit-imgs-list" id="newPostImgsList">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+      <div class="edit-footer">
+        <button class="btn-action" onclick="closeNewPostModal()">Hủy</button>
+        <button class="btn-save-edit" onclick="submitNewPost()">🚀 Đăng Bài Lên Web</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RENAME PARTS MODAL (ADMIN) -->
+  <div class="edit-modal" id="renamePartsModal">
+    <div class="edit-panel">
+      <div class="edit-header">
+        <h4>🏷️ Đổi Tên Các Phần Theo Chủ Đề</h4>
+        <button class="btn-action" style="padding:0 8px;" onclick="closeRenamePartsModal()">&times;</button>
+      </div>
+      <div class="edit-body">
+        <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.6;">
+          Chị Mi có thể đặt tên theo từng chủ đề cho từng phần (ví dụ: <em>Tư duy hẹn hò, Thao túng tâm lý, Bẫy hôn nhân, Giá trị bản thân...</em>). Tên mới sẽ tự động hiển thị trên thanh danh mục và tiêu đề bài viết.
+        </p>
+        <div id="renamePartsList" style="display:flex;flex-direction:column;gap:10px;margin-top:6px;">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+      <div class="edit-footer">
+        <button class="btn-action" onclick="resetPartTitlesToDefault()" style="color:var(--accent-rose);">Khôi phục tên gốc</button>
+        <div class="edit-footer-right">
+          <button class="btn-action" onclick="closeRenamePartsModal()">Hủy</button>
+          <button class="btn-save-edit" onclick="savePartTitles()">💾 Lưu Tên Các Phần</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX MODAL -->
+  <div class="lightbox-modal" id="lightboxModal" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <img src="" alt="Enlarged Preview" class="lightbox-img" id="lightboxImg" draggable="false" oncontextmenu="return false;">
+  </div>
+
+  <!-- SEARCH MODAL -->
+  <div class="search-modal" id="searchModal" onclick="if(event.target===this) closeSearchModal()">
+    <div class="search-panel">
+      <div class="search-header">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="searchInput" placeholder="Nhập từ khóa tìm kiếm (hẹn hò, tiền, ái kỷ, cà phê, quà...)" oninput="handleSearch(this.value)">
+        <button class="btn-action" style="padding:0 8px;" onclick="closeSearchModal()">&times;</button>
+      </div>
+      <div class="search-results" id="searchResults">
+        <div style="padding: 30px; text-align: center; color: var(--text-dim);">
+          Gõ từ khóa để tìm kiếm tức thì trong toàn bộ bài viết...
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOAD DATA SCRIPT -->
+  <script src="data.js"></script>
+
+  <script>
+    const VALID_PASSCODES = ['DEMO2026', 'VIP2026', '123456'];
+    const ADMIN_PASSCODE = 'ADMIN_DEMO_2026';
+    const AUTH_KEY = 'mmv_vip_auth_v4';
+    const EDITS_KEY = 'mmv_admin_edits_v1';
+    const NEW_POSTS_KEY = 'mmv_admin_new_posts_v1';
+    const PART_TITLES_KEY = 'mmv_part_titles_v1';
+    const ARTICLE_MOVES_KEY = 'mmv_article_moves_v1';
+    const ADMIN_AUTH_KEY = 'mmv_admin_auth_v1';
+    
+    let currentPartIndex = 0;
+    let currentFontSizeIdx = 0;
+    let isAdminMode = false;
+    let editingArticleId = null;
+    let editingImages = [];
+    let newPostImages = [];
+    const fontSizes = ['16px', '17.5px', '19px'];
+
+    let currentDiscordUser = null;
+
+    // 1. AUTH & DEMO LOGIC
+    function loginAsDemoUser() {
+      const demoUser = {
+        id: '987654321098765432',
+        name: 'Demo VIP Member',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'
+      };
+      localStorage.setItem('mmv_discord_user', JSON.stringify(demoUser));
+      currentDiscordUser = demoUser;
+      displayUserProfile(demoUser);
+      updatePersonalWatermark(demoUser);
+      document.getElementById('lockOverlay').classList.add('hidden');
+      showToast('✓ Đã mở khóa giao diện đọc bài (Demo Member)!');
+    }
+
+    function loginAsDemoAdmin() {
+      loginAsDemoUser();
+      localStorage.setItem(ADMIN_AUTH_KEY, 'true');
+      enableAdminMode();
+      showToast('✓ Đã mở khóa chế độ Biên Tập & Quản Trị (Admin)!');
+    }
+
+    function toggleAdminPassModal() {
+      const pass = prompt('Nhập mật mã Quản trị viên (ADMIN_DEMO_2026):');
+      if (pass === ADMIN_PASSCODE) {
+        loginAsDemoAdmin();
+      } else if (pass !== null) {
+        alert('Mật mã quản trị không đúng!');
+      }
+    }
+
+    function showAuthError(errCode) {
+      const box = document.getElementById('authAlertBox');
+      if (!box) return;
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const name = urlParams.get('name') ? ` (${decodeURIComponent(urlParams.get('name'))})` : '';
+
+      let msg = '';
+      switch (errCode) {
+        case 'not_in_server':
+          msg = `⚠️ <strong>Tài khoản Discord${name} chưa vào server!</strong><br>Bạn chưa ở trong Máy chủ VIP nên không thể truy cập kho bài viết.`;
+          break;
+        case 'no_vip_role':
+          msg = `🔒 <strong>Chưa có Role VIP${name}!</strong><br>Tài khoản Discord này chưa có role VIP tháng này.`;
+          break;
+        case 'access_denied':
+          msg = `⚠️ Bạn đã từ chối cấp quyền đăng nhập Discord.`;
+          break;
+        case 'token_failed':
+        case 'server_error':
+          msg = `⚠️ Lỗi kết nối Discord. Vui lòng thử bấm Đăng nhập lại.`;
+          break;
+        default:
+          msg = `⚠️ Không thể xác thực tài khoản Discord (${errCode}).`;
+      }
+
+      box.innerHTML = msg;
+      box.classList.add('show');
+    }
+
+    function displayUserProfile(user) {
+      const pill = document.getElementById('userPill');
+      const avatar = document.getElementById('userAvatar');
+      const name = document.getElementById('userName');
+      if (!pill || !avatar || !name) return;
+
+      avatar.src = user.avatar || 'https://cdn.discordapp.com/embed/avatars/0.png';
+      name.textContent = user.name || 'Hội viên VIP';
+      pill.style.display = 'inline-flex';
+    }
+
+    function updatePersonalWatermark(user) {
+      const watermark = document.getElementById('watermarkOverlay');
+      if (!watermark) return;
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      const textColor = isLight ? '#475569' : '#cbd5e1';
+      const opacity = isLight ? '0.16' : '0.22';
+
+      const userName = (user && user.name) ? user.name : 'DEMO VIP MEMBER';
+      const userId = (user && user.id) ? `ID: ${user.id}` : 'VIP';
+      const stamp = `EXCLUSIVE VIP ARCHIVE • ${userName} (${userId}) • DO NOT REPOST`;
+      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='340' height='200' viewBox='0 0 340 200'><text x='20' y='110' transform='rotate(-22 20 110)' fill='${textColor}' fill-opacity='${opacity}' font-family='-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif' font-weight='600' font-size='12' letter-spacing='1.5'>${stamp}</text></svg>`;
+      try {
+        const base64 = btoa(unescape(encodeURIComponent(svg)));
+        watermark.style.backgroundImage = `url("data:image/svg+xml;base64,${base64}")`;
+      } catch (e) {
+        watermark.style.backgroundImage = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='340' height='200' viewBox='0 0 340 200'><text x='20' y='110' transform='rotate(-22 20 110)' fill='${textColor.replace('#', '%23')}' fill-opacity='${opacity}' font-family='sans-serif' font-weight='600' font-size='12' letter-spacing='1.5'>${encodeURIComponent(stamp)}</text></svg>")`;
+      }
+      watermark.style.opacity = '1';
+    }
+
+    async function checkAuth() {
+      const lockOverlay = document.getElementById('lockOverlay');
+      const step1 = document.getElementById('stepDiscordAuth');
+      const step2 = document.getElementById('stepPasscodeAuth');
+
+      // Check query error params
+      const urlParams = new URLSearchParams(window.location.search);
+      const authErr = urlParams.get('auth_error');
+      if (authErr) {
+        showAuthError(authErr);
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+
+      // Check query success params
+      if (urlParams.get('auth_success')) {
+        const uid = urlParams.get('uid');
+        const uname = urlParams.get('uname');
+        const uavatar = urlParams.get('uavatar');
+        if (uid) {
+          const userObj = {
+            id: uid,
+            name: decodeURIComponent(uname || 'Hội viên'),
+            avatar: decodeURIComponent(uavatar || '')
+          };
+          localStorage.setItem('mmv_discord_user', JSON.stringify(userObj));
+          currentDiscordUser = userObj;
+        }
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+
+      // Khôi phục phiên Demo/Discord từ localStorage
+      if (!currentDiscordUser) {
+        try {
+          const saved = JSON.parse(localStorage.getItem('mmv_discord_user') || 'null');
+          if (saved && saved.id) {
+            currentDiscordUser = saved;
+          }
+        } catch(e) {}
+      }
+
+      // Check Admin login bypass
+      if (localStorage.getItem(ADMIN_AUTH_KEY) === 'true') {
+        lockOverlay.classList.add('hidden');
+        enableAdminMode();
+        return;
+      }
+
+      // NẾU ĐÃ ĐĂNG NHẬP / CHỌN DEMO -> MỞ KHÓA VÀO ĐỌC BÀI NGAY:
+      if (currentDiscordUser) {
+        displayUserProfile(currentDiscordUser);
+        updatePersonalWatermark(currentDiscordUser);
+        lockOverlay.classList.add('hidden');
+        return;
+      }
+
+      // Chưa đăng nhập -> Hiển thị bảng khóa với 2 nút Demo
+      lockOverlay.classList.remove('hidden');
+    }
+
+    function handleUnlock(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      const val = (document.getElementById('passInput').value || '').trim();
+      const err = document.getElementById('lockError');
+      
+      if (val === ADMIN_PASSCODE) {
+        loginAsDemoAdmin();
+        return;
+      }
+
+      if (VALID_PASSCODES.includes(val) || VALID_PASSCODES.includes(val.toUpperCase())) {
+        loginAsDemoUser();
+        return;
+      } else {
+        err.textContent = 'Mật mã không đúng. Thử: DEMO2026 hoặc ADMIN_DEMO_2026';
+        const card = document.querySelector('.lock-card');
+        card.style.animation = 'none';
+        void card.offsetWidth;
+        card.style.animation = 'shake 0.4s ease';
+      }
+    }
+
+    function relockPage() {
+      if (confirm('Khóa lại trang web? Lần sau bạn sẽ cần mở khóa lại.')) {
+        localStorage.removeItem('mmv_discord_user');
+        localStorage.removeItem(AUTH_KEY);
+        localStorage.removeItem(ADMIN_AUTH_KEY);
+        isAdminMode = false;
+        window.location.reload();
+      }
+    }
+
+    function discordLogout() {
+      if (confirm('Bạn có chắc muốn đăng xuất tài khoản này?')) {
+        localStorage.removeItem('mmv_discord_user');
+        localStorage.removeItem(AUTH_KEY);
+        localStorage.removeItem(ADMIN_AUTH_KEY);
+        window.location.reload();
+      }
+    }
+
+    // 2. ADMIN EDITING LOGIC & MODES
+    function toggleAdminMode() {
+      if (isAdminMode) {
+        isAdminMode = false;
+        localStorage.removeItem(ADMIN_AUTH_KEY);
+        document.getElementById('adminBadge').style.display = 'none';
+        document.getElementById('adminBtn').classList.remove('btn-admin-active');
+        document.getElementById('newPostBtn').style.display = 'none';
+        document.getElementById('renamePartsBtn').style.display = 'none';
+        document.getElementById('exportBtn').style.display = 'none';
+        document.getElementById('adminFloatingDock').style.display = 'none';
+        document.getElementById('sidebarMobileAdminSuite').style.display = 'none';
+        const qBtn = document.getElementById('quickEditPartBtn');
+        if (qBtn) qBtn.style.display = 'none';
+        document.querySelectorAll('.btn-edit-post').forEach(el => el.style.display = 'none');
+        showToast('Đã tắt chế độ Biên tập.');
+      } else {
+        const pass = prompt('Nhập mật mã Biên tập (Admin Password dành riêng cho Chị Mi):');
+        if (pass === ADMIN_PASSCODE) {
+          localStorage.setItem(ADMIN_AUTH_KEY, 'true');
+          enableAdminMode();
+        } else if (pass !== null) {
+          alert('Sai mật mã biên tập! Chỉ chủ kênh mới có quyền truy cập tính năng này.');
+        }
+      }
+    }
+
+    function enableAdminMode() {
+      isAdminMode = true;
+      document.getElementById('adminBadge').style.display = 'inline-block';
+      document.getElementById('adminBtn').classList.add('btn-admin-active');
+      document.getElementById('newPostBtn').style.display = 'inline-flex';
+      document.getElementById('renamePartsBtn').style.display = 'inline-flex';
+      document.getElementById('exportBtn').style.display = 'inline-flex';
+      document.getElementById('adminFloatingDock').style.display = 'flex';
+      document.getElementById('sidebarMobileAdminSuite').style.display = 'block';
+      const qBtn = document.getElementById('quickEditPartBtn');
+      if (qBtn) qBtn.style.display = 'inline-flex';
+      document.querySelectorAll('.btn-edit-post').forEach(el => el.style.display = 'inline-flex');
+      showToast('👑 Chế độ Biên Tập đã kích hoạt! Chị Mi có thể sửa bài, tải ảnh, đổi tên phần và di chuyển bài viết.');
+    }
+
+    // HELPER: PART DISPLAY NAMES
+    function getPartDisplayName(part) {
+      if (part.customTitle && part.customTitle.trim()) {
+        return part.customTitle.trim();
+      }
+      return `Phần ${part.part}`;
+    }
+
+    // HELPER: IMAGE COMPRESSION & PROCESSING
+    function compressImage(file, maxWidth = 1600, quality = 0.85) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            let w = img.width;
+            let h = img.height;
+            if (w > maxWidth || h > maxWidth) {
+              if (w > h) {
+                h = Math.round((h * maxWidth) / w);
+                w = maxWidth;
+              } else {
+                w = Math.round((w * maxWidth) / h);
+                h = maxWidth;
+              }
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+            const dataUrl = canvas.toDataURL('image/jpeg', quality);
+            resolve(dataUrl);
+          };
+          img.onerror = reject;
+          img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function handleImageFiles(files, target) {
+      if (!files || !files.length) return;
+      showToast('⏳ Đang xử lý và tối ưu ảnh...');
+      for (let i = 0; i < files.length; i++) {
+        try {
+          const dataUrl = await compressImage(files[i]);
+          if (target === 'edit') {
+            editingImages.push(dataUrl);
+            renderEditImagesList();
+          } else if (target === 'new') {
+            newPostImages.push(dataUrl);
+            renderNewPostImagesList();
+          }
+        } catch (e) {
+          console.error(e);
+          alert('Không thể tải ảnh: ' + (files[i].name || ''));
+        }
+      }
+      showToast('✓ Đã tải ảnh lên thành công!');
+    }
+
+    function promptAddImageUrl(target) {
+      const url = prompt('Dán đường dẫn (URL) hình ảnh vào đây:');
+      if (url && url.trim()) {
+        const cleanUrl = url.trim();
+        if (target === 'edit') {
+          editingImages.push(cleanUrl);
+          renderEditImagesList();
+        } else if (target === 'new') {
+          newPostImages.push(cleanUrl);
+          renderNewPostImagesList();
+        }
+      }
+    }
+
+    function removeImageFromEdit(idx) {
+      editingImages.splice(idx, 1);
+      renderEditImagesList();
+    }
+
+    function removeImageFromNew(idx) {
+      newPostImages.splice(idx, 1);
+      renderNewPostImagesList();
+    }
+
+    function renderEditImagesList() {
+      const container = document.getElementById('editImgsList');
+      if (!editingImages.length) {
+        container.innerHTML = '<span style="color:var(--text-dim);font-size:0.85rem;grid-column:1/-1;">(Chưa có ảnh đính kèm)</span>';
+        return;
+      }
+      container.innerHTML = editingImages.map((img, idx) => `
+        <div class="edit-img-item">
+          <img src="${img}" alt="Ảnh ${idx + 1}">
+          <button type="button" class="btn-remove-img" onclick="removeImageFromEdit(${idx})" title="Xóa ảnh này">&times;</button>
+        </div>
+      `).join('');
+    }
+
+    function renderNewPostImagesList() {
+      const container = document.getElementById('newPostImgsList');
+      if (!newPostImages.length) {
+        container.innerHTML = '<span style="color:var(--text-dim);font-size:0.85rem;grid-column:1/-1;">(Chưa có ảnh đính kèm)</span>';
+        return;
+      }
+      container.innerHTML = newPostImages.map((img, idx) => `
+        <div class="edit-img-item">
+          <img src="${img}" alt="Ảnh ${idx + 1}">
+          <button type="button" class="btn-remove-img" onclick="removeImageFromNew(${idx})" title="Xóa ảnh này">&times;</button>
+        </div>
+      `).join('');
+    }
+
+    // 3. PERSISTENCE HELPERS
+    function getLocalEdits() {
+      try {
+        return JSON.parse(localStorage.getItem(EDITS_KEY) || '{}');
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveLocalEdits(edits) {
+      localStorage.setItem(EDITS_KEY, JSON.stringify(edits));
+    }
+
+    function getLocalPartTitles() {
+      try {
+        return JSON.parse(localStorage.getItem(PART_TITLES_KEY) || '{}');
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveLocalPartTitles(titles) {
+      localStorage.setItem(PART_TITLES_KEY, JSON.stringify(titles));
+    }
+
+    function getLocalArticleMoves() {
+      try {
+        return JSON.parse(localStorage.getItem(ARTICLE_MOVES_KEY) || '{}');
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveLocalArticleMoves(moves) {
+      localStorage.setItem(ARTICLE_MOVES_KEY, JSON.stringify(moves));
+    }
+
+    // APPLY ALL SAVED EDITS
+    function applySavedEdits() {
+      if (!window.DOCS_DATA || !window.DOCS_DATA.length) return;
+
+      // 1. Apply custom part titles
+      const titles = getLocalPartTitles();
+      window.DOCS_DATA.forEach(part => {
+        if (titles[part.part]) {
+          part.customTitle = titles[part.part];
+          part.title = titles[part.part];
+        }
+      });
+
+      // 2. Restore dynamically added posts
+      try {
+        const savedNew = JSON.parse(localStorage.getItem(NEW_POSTS_KEY) || '[]');
+        savedNew.forEach(item => {
+          const p = window.DOCS_DATA[item.partIdx];
+          if (p && !p.articles.some(a => a.id === item.article.id)) {
+            p.articles.push(item.article);
+          }
+        });
+      } catch(e) {}
+
+      // 3. Apply moved articles across parts
+      const moves = getLocalArticleMoves();
+      Object.keys(moves).forEach(artId => {
+        const targetPartNum = moves[artId];
+        let sourcePart = null;
+        let artObj = null;
+        let artIdx = -1;
+        for (const p of window.DOCS_DATA) {
+          const idx = p.articles.findIndex(a => a.id === artId);
+          if (idx !== -1) {
+            sourcePart = p;
+            artObj = p.articles[idx];
+            artIdx = idx;
+            break;
+          }
+        }
+        if (sourcePart && artObj && sourcePart.part !== targetPartNum) {
+          const destPart = window.DOCS_DATA.find(p => p.part === targetPartNum);
+          if (destPart) {
+            sourcePart.articles.splice(artIdx, 1);
+            destPart.articles.push(artObj);
+          }
+        }
+      });
+
+      // 4. Apply article content edits
+      const edits = getLocalEdits();
+      window.DOCS_DATA.forEach(part => {
+        part.articles.forEach(art => {
+          if (edits[art.id]) {
+            const ed = edits[art.id];
+            if (ed.title !== undefined) art.title = ed.title;
+            if (ed.hasExplicitTitle !== undefined) art.hasExplicitTitle = ed.hasExplicitTitle;
+            if (ed.contentText !== undefined) {
+              art.contentText = ed.contentText;
+              art.contentHtml = formatTextToHtml(ed.contentText);
+            }
+            if (ed.images !== undefined) art.images = ed.images;
+          }
+        });
+        part.articleCount = part.articles.length;
+        part.imageCount = part.articles.reduce((acc, a) => acc + (a.images ? a.images.length : 0), 0);
+      });
+    }
+
+    // 4. RENAME PARTS ACCORDING TO TOPICS (TÍNH NĂNG ĐỔI TÊN CÁC PHẦN)
+    function openRenamePartsModal() {
+      const container = document.getElementById('renamePartsList');
+      container.innerHTML = window.DOCS_DATA.map((p) => {
+        const currentTitle = p.customTitle || p.title || `Phần ${p.part}`;
+        return `
+          <div class="rename-part-row">
+            <span>Phần ${p.part}:</span>
+            <input type="text" class="edit-input" id="renamePartInput_${p.part}" value="${escapeHtml(currentTitle)}" placeholder="Nhập tên chủ đề cho Phần ${p.part}...">
+          </div>
+        `;
+      }).join('');
+      document.getElementById('renamePartsModal').classList.add('active');
+    }
+
+    function closeRenamePartsModal() {
+      document.getElementById('renamePartsModal').classList.remove('active');
+    }
+
+    function savePartTitles() {
+      const titles = getLocalPartTitles();
+      window.DOCS_DATA.forEach(p => {
+        const inp = document.getElementById(`renamePartInput_${p.part}`);
+        if (inp) {
+          const val = inp.value.trim();
+          p.customTitle = val || `Phần ${p.part}`;
+          p.title = val || `Phần ${p.part}`;
+          titles[p.part] = p.customTitle;
+        }
+      });
+      saveLocalPartTitles(titles);
+      closeRenamePartsModal();
+      renderSidebar();
+      renderContent();
+      showToast('✓ Đã cập nhật tên các phần theo chủ đề thành công!');
+    }
+
+    function resetPartTitlesToDefault() {
+      if (confirm('Khôi phục tên tất cả 12 phần về mặc định (Phần 1 -> Phần 12)?')) {
+        localStorage.removeItem(PART_TITLES_KEY);
+        window.DOCS_DATA.forEach(p => {
+          delete p.customTitle;
+          p.title = `Phần ${p.part}`;
+        });
+        closeRenamePartsModal();
+        renderSidebar();
+        renderContent();
+        showToast('Đã khôi phục tên mặc định.');
+      }
+    }
+
+    function quickEditCurrentPartTitle() {
+      const part = window.DOCS_DATA[currentPartIndex];
+      if (!part) return;
+      const current = part.customTitle || part.title || `Phần ${part.part}`;
+      const newTitle = prompt(`Nhập tên / chủ đề mới cho Phần ${part.part}:`, current);
+      if (newTitle !== null) {
+        const val = newTitle.trim() || `Phần ${part.part}`;
+        part.customTitle = val;
+        part.title = val;
+        const titles = getLocalPartTitles();
+        titles[part.part] = val;
+        saveLocalPartTitles(titles);
+        renderSidebar();
+        renderContent();
+        showToast(`✓ Đã đổi tên Phần ${part.part} thành: ${val}`);
+      }
+    }
+
+    // 5. NEW POST MODAL LOGIC
+    function openNewPostModal() {
+      const sel = document.getElementById('newPostPartSelect');
+      sel.innerHTML = window.DOCS_DATA.map((p, idx) => `
+        <option value="${idx}" ${idx === currentPartIndex ? 'selected' : ''}>Phần ${p.part}: ${getPartDisplayName(p)} (${p.articleCount} bài)</option>
+      `).join('');
+      document.getElementById('newPostTitleInput').value = '';
+      document.getElementById('newPostTextarea').value = '';
+      newPostImages = [];
+      renderNewPostImagesList();
+      document.getElementById('newPostModal').classList.add('active');
+    }
+
+    function closeNewPostModal() {
+      document.getElementById('newPostModal').classList.remove('active');
+    }
+
+    function submitNewPost() {
+      const partIdx = parseInt(document.getElementById('newPostPartSelect').value, 10);
+      const title = document.getElementById('newPostTitleInput').value.trim();
+      const text = document.getElementById('newPostTextarea').value.trim();
+
+      if (!text && !newPostImages.length) {
+        alert('Vui lòng nhập nội dung hoặc thêm hình ảnh cho bài viết!');
+        return;
+      }
+
+      const part = window.DOCS_DATA[partIdx];
+      const newIndex = part.articles.length + 1;
+      const newId = `p${part.part}-art${newIndex}-${Date.now()}`;
+
+      const newArticle = {
+        id: newId,
+        index: newIndex,
+        timestamp: 'Vừa đăng',
+        hasExplicitTitle: Boolean(title),
+        title: title,
+        preview: title || text.substring(0, 75) + '...',
+        contentHtml: formatTextToHtml(text),
+        contentText: text,
+        images: [...newPostImages]
+      };
+
+      part.articles.push(newArticle);
+      part.articleCount = part.articles.length;
+      part.imageCount = part.articles.reduce((acc, a) => acc + (a.images ? a.images.length : 0), 0);
+
+      // Save to localStorage
+      try {
+        const savedNew = JSON.parse(localStorage.getItem(NEW_POSTS_KEY) || '[]');
+        savedNew.push({ partIdx, article: newArticle });
+        localStorage.setItem(NEW_POSTS_KEY, JSON.stringify(savedNew));
+      } catch(e) {}
+
+      closeNewPostModal();
+      selectPart(partIdx);
+      showToast(`✓ Đã đăng bài viết mới vào Phần ${part.part}!`);
+
+      setTimeout(() => {
+        const el = document.getElementById(newId);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 350);
+    }
+
+    // 6. EDIT POST MODAL & MOVE ARTICLE (DI CHUYỂN BÀI VIẾT)
+    function openEditModal(artId) {
+      editingArticleId = artId;
+      
+      // Find current part index
+      let foundPartIdx = -1;
+      let foundArt = null;
+      window.DOCS_DATA.forEach((p, idx) => {
+        const a = p.articles.find(item => item.id === artId);
+        if (a) {
+          foundPartIdx = idx;
+          foundArt = a;
+        }
+      });
+
+      if (!foundArt) return;
+
+      // Populate Move Part select
+      const moveSel = document.getElementById('editMovePartSelect');
+      moveSel.innerHTML = window.DOCS_DATA.map((p, idx) => `
+        <option value="${idx}" ${idx === foundPartIdx ? 'selected' : ''}>
+          Phần ${p.part}: ${getPartDisplayName(p)} (${p.articleCount} bài)
+        </option>
+      `).join('');
+
+      document.getElementById('editTitleInput').value = foundArt.title || '';
+      document.getElementById('editTextarea').value = foundArt.contentText || '';
+      editingImages = [...(foundArt.images || [])];
+      renderEditImagesList();
+
+      document.getElementById('editModal').classList.add('active');
+    }
+
+    function closeEditModal() {
+      document.getElementById('editModal').classList.remove('active');
+      editingArticleId = null;
+    }
+
+    function saveArticleEdit() {
+      if (!editingArticleId) return;
+
+      // Find current article location
+      let currentPartIdx = -1;
+      let currentArtIdx = -1;
+      window.DOCS_DATA.forEach((p, pIdx) => {
+        const aIdx = p.articles.findIndex(item => item.id === editingArticleId);
+        if (aIdx !== -1) {
+          currentPartIdx = pIdx;
+          currentArtIdx = aIdx;
+        }
+      });
+
+      if (currentPartIdx === -1 || currentArtIdx === -1) return;
+
+      const currentPart = window.DOCS_DATA[currentPartIdx];
+      const art = currentPart.articles[currentArtIdx];
+      const targetPartIdx = parseInt(document.getElementById('editMovePartSelect').value, 10);
+      const newTitle = document.getElementById('editTitleInput').value.trim();
+      const newText = document.getElementById('editTextarea').value.trim();
+
+      art.title = newTitle;
+      art.hasExplicitTitle = Boolean(newTitle);
+      art.contentText = newText;
+      art.contentHtml = formatTextToHtml(newText);
+      art.images = [...editingImages];
+
+      // Save content edits to localStorage
+      const edits = getLocalEdits();
+      edits[editingArticleId] = {
+        title: art.title,
+        hasExplicitTitle: art.hasExplicitTitle,
+        contentText: art.contentText,
+        images: art.images
+      };
+      saveLocalEdits(edits);
+
+      // CHECK IF ARTICLE MOVED TO A DIFFERENT PART
+      if (targetPartIdx !== currentPartIdx) {
+        const targetPart = window.DOCS_DATA[targetPartIdx];
+        const [movedArt] = currentPart.articles.splice(currentArtIdx, 1);
+        targetPart.articles.push(movedArt);
+
+        // Update counts
+        currentPart.articleCount = currentPart.articles.length;
+        currentPart.imageCount = currentPart.articles.reduce((acc, a) => acc + (a.images ? a.images.length : 0), 0);
+        targetPart.articleCount = targetPart.articles.length;
+        targetPart.imageCount = targetPart.articles.reduce((acc, a) => acc + (a.images ? a.images.length : 0), 0);
+
+        // Update moves mapping in localStorage
+        const moves = getLocalArticleMoves();
+        moves[editingArticleId] = targetPart.part;
+        saveLocalArticleMoves(moves);
+
+        closeEditModal();
+        selectPart(targetPartIdx);
+        showToast(`✓ Đã di chuyển bài viết sang Phần ${targetPart.part} (${getPartDisplayName(targetPart)})!`);
+
+        setTimeout(() => {
+          const el = document.getElementById(editingArticleId);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 350);
+        return;
+      }
+
+      // If kept in same part
+      closeEditModal();
+      renderContent();
+      showToast('✓ Đã lưu thay đổi bài viết thành công!');
+    }
+
+    function resetArticleToOriginal() {
+      if (!editingArticleId) return;
+      if (confirm('Khôi phục bài viết này về nguyên bản ban đầu?')) {
+        const edits = getLocalEdits();
+        delete edits[editingArticleId];
+        saveLocalEdits(edits);
+        const moves = getLocalArticleMoves();
+        delete moves[editingArticleId];
+        saveLocalArticleMoves(moves);
+        location.reload();
+      }
+    }
+
+    function exportDataJs() {
+      const code = 'window.DOCS_DATA = ' + JSON.stringify(window.DOCS_DATA, null, 2) + ';';
+      const blob = new Blob([code], { type: 'application/javascript;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'data.js';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('💾 Đã tải xuống file data.js mới!');
+    }
+
+    function formatTextToHtml(text) {
+      if (!text) return "";
+      const paragraphs = text.split(/\n{2,}/);
+      return paragraphs.map(p => {
+        p = p.trim();
+        if (!p) return "";
+        const lines = p.split('\n');
+        const isList = lines.every(l => /^[•\-\*]\s+/.test(l.trim()) || !l.trim());
+        if (isList && lines.length > 1) {
+          const items = lines.map(l => {
+            const clean = l.replace(/^[•\-\*]\s+/, '').trim();
+            return clean ? `<li>${escapeHtml(clean)}</li>` : '';
+          }).join('');
+          return `<ul>${items}</ul>`;
+        } else if (p.startsWith('>')) {
+          const qText = p.replace(/^>\s*/gm, '');
+          return `<blockquote>${escapeHtml(qText).replace(/\n/g, '<br>')}</blockquote>`;
+        } else {
+          return `<p>${escapeHtml(p).replace(/\n/g, '<br>')}</p>`;
+        }
+      }).join('');
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    // 7. RENDER SIDEBAR & NAVIGATION
+    function renderSidebar() {
+      const list = document.getElementById('partsNavList');
+      if (!window.DOCS_DATA || !window.DOCS_DATA.length) return;
+
+      list.innerHTML = window.DOCS_DATA.map((part, idx) => {
+        const displayName = getPartDisplayName(part);
+        return `
+          <li>
+            <button class="part-btn ${idx === currentPartIndex ? 'active' : ''}" onclick="selectPart(${idx})">
+              <span class="part-label">
+                <span>📖</span>
+                <span class="part-name-text">${displayName}</span>
+              </span>
+              <span class="part-badge">${part.articleCount} bài</span>
+            </button>
+          </li>
+        `;
+      }).join('');
+    }
+
+    function selectPart(idx) {
+      currentPartIndex = idx;
+      renderSidebar();
+      renderContent();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      toggleSidebar(false);
+    }
+
+    // 8. RENDER CONTENT
+    function renderContent() {
+      const part = window.DOCS_DATA[currentPartIndex];
+      if (!part) return;
+
+      const displayName = getPartDisplayName(part);
+
+      // Update Hero
+      document.getElementById('heroTag').textContent = `PHẦN ${part.part}`;
+      document.getElementById('heroTitle').textContent = displayName;
+      
+      const qBtn = document.getElementById('quickEditPartBtn');
+      if (qBtn) qBtn.style.display = isAdminMode ? 'inline-flex' : 'none';
+
+      document.getElementById('heroMeta').innerHTML = `
+        <span>✍️ Tác giả: <strong>Exclusive Creator</strong></span>
+        <span>•</span>
+        <span>📚 <strong>${part.articleCount}</strong> bài viết hoàn chỉnh</span>
+        <span>•</span>
+        <span>🖼️ <strong>${part.imageCount}</strong> hình ảnh minh họa</span>
+      `;
+
+      // Render Articles
+      const stream = document.getElementById('articlesStream');
+      const avatarSrc = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80";
+
+      stream.innerHTML = part.articles.map(art => {
+        const hasImgs = art.images && art.images.length > 0;
+        const isSingle = art.images && art.images.length === 1;
+        const imgGallery = hasImgs ? `
+          <div class="article-gallery ${isSingle ? 'single-img' : ''}">
+            ${art.images.map(img => `
+              <div class="gallery-img-wrap" onclick="openLightbox('${img.replace(/'/g, "\\'")}')">
+                <img src="${img}" loading="lazy" alt="Ảnh minh họa" draggable="false" oncontextmenu="return false;">
+              </div>
+            `).join('')}
+          </div>
+        ` : '';
+
+        const titleHtml = (art.hasExplicitTitle && art.title) 
+          ? `<h3 class="article-title">${art.title}</h3>` 
+          : '';
+
+        return `
+          <article class="article-card" id="${art.id}">
+            <div class="article-header">
+              <span class="article-badge">Bài #${art.index < 10 ? '0' + art.index : art.index}</span>
+              <div class="article-meta-info">
+                <span>📅 ${art.timestamp || 'Lưu trữ'}</span>
+                ${hasImgs ? `<span>• 🖼️ ${art.images.length} ảnh</span>` : ''}
+              </div>
+            </div>
+
+            ${titleHtml}
+
+            ${imgGallery}
+
+            <div class="article-body">
+              ${art.contentHtml || '<p style="color:var(--text-dim);font-style:italic;">[Bài viết dạng hình ảnh]</p>'}
+            </div>
+
+            <div class="article-footer">
+              <div class="article-footer-author">
+                <img src="${avatarSrc}" class="author-tiny-avatar" alt="Author" draggable="false">
+                <span>VIP Editorial Team ✓ • Lưu trữ nội bộ VIP</span>
+              </div>
+              <div class="article-footer-actions">
+                <button class="btn-icon-subtle btn-edit-post" style="${isAdminMode ? 'display:inline-flex;' : ''}" onclick="openEditModal('${art.id}')" title="Chỉnh sửa bài này">
+                  <span>✏️ Sửa bài</span>
+                </button>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    // 9. LIGHTBOX
+    function openLightbox(src) {
+      const modal = document.getElementById('lightboxModal');
+      const img = document.getElementById('lightboxImg');
+      img.src = src;
+      modal.classList.add('active');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightboxModal').classList.remove('active');
+    }
+
+    // 10. SEARCH MODAL
+    function openSearchModal() {
+      const modal = document.getElementById('searchModal');
+      modal.classList.add('active');
+      const inp = document.getElementById('searchInput');
+      inp.focus();
+      if (inp.value) handleSearch(inp.value);
+    }
+
+    function closeSearchModal() {
+      document.getElementById('searchModal').classList.remove('active');
+    }
+
+    function handleSearch(query) {
+      const resContainer = document.getElementById('searchResults');
+      const q = query.trim().toLowerCase();
+      if (!q) {
+        resContainer.innerHTML = '<div style="padding: 30px; text-align: center; color: var(--text-dim);">Gõ từ khóa để tìm kiếm...</div>';
+        return;
+      }
+
+      const results = [];
+      window.DOCS_DATA.forEach((part, partIdx) => {
+        part.articles.forEach(art => {
+          if ((art.title && art.title.toLowerCase().includes(q)) || 
+              (art.contentText && art.contentText.toLowerCase().includes(q))) {
+            results.push({ partIdx, partNum: part.part, art });
+          }
+        });
+      });
+
+      if (!results.length) {
+        resContainer.innerHTML = `<div style="padding: 30px; text-align: center; color: var(--text-dim);">Không tìm thấy bài viết nào chứa từ khóa "<strong>${query}</strong>"</div>`;
+        return;
+      }
+
+      resContainer.innerHTML = results.slice(0, 40).map(r => {
+        const titleDisplay = r.art.title || r.art.preview;
+        const text = r.art.contentText || '';
+        const idx = text.toLowerCase().indexOf(q);
+        let snippet = '';
+        if (idx >= 0) {
+          const start = Math.max(0, idx - 40);
+          const end = Math.min(text.length, idx + 120);
+          snippet = text.substring(start, end);
+        } else {
+          snippet = text.substring(0, 100);
+        }
+
+        const re = new RegExp(`(${q})`, 'gi');
+        const highlightedTitle = titleDisplay.replace(re, '<mark>$1</mark>');
+        const highlightedSnippet = snippet.replace(re, '<mark>$1</mark>');
+
+        return `
+          <div class="search-item" onclick="jumpToSearchResult(${r.partIdx}, '${r.art.id}')">
+            <div class="search-item-part">Phần ${r.partNum} • Bài #${r.art.index}</div>
+            <div class="search-item-title">${highlightedTitle}</div>
+            <div class="search-item-text">...${highlightedSnippet}...</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function jumpToSearchResult(partIdx, artId) {
+      closeSearchModal();
+      selectPart(partIdx);
+      setTimeout(() => {
+        const el = document.getElementById(artId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.style.borderColor = 'var(--accent-gold)';
+          el.style.boxShadow = '0 0 25px var(--accent-gold-dim)';
+          setTimeout(() => {
+            el.style.borderColor = '';
+            el.style.boxShadow = '';
+          }, 2500);
+        }
+      }, 300);
+    }
+
+    // 11. UTILITIES
+    function toggleSidebar(force) {
+      const sb = document.getElementById('sidebar');
+      const bd = document.getElementById('sidebarBackdrop');
+      const shouldOpen = typeof force === 'boolean' ? force : !sb.classList.contains('open');
+      sb.classList.toggle('open', shouldOpen);
+      if (bd) bd.classList.toggle('active', shouldOpen);
+    }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      document.getElementById('themeBtn').textContent = isDark ? '☀️' : '🌙';
+      updatePersonalWatermark(currentDiscordUser);
+    }
+
+    function adjustFontSize() {
+      currentFontSizeIdx = (currentFontSizeIdx + 1) % fontSizes.length;
+      document.documentElement.style.fontSize = fontSizes[currentFontSizeIdx];
+    }
+
+    // SECURITY & ANTI-PIRACY HANDLERS
+    let toastTimeout = null;
+    function showToast(msg) {
+      const t = document.getElementById('toastNotice');
+      if (!t) return;
+      t.innerHTML = msg;
+      t.classList.add('show');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        t.classList.remove('show');
+      }, 3000);
+    }
+
+    document.addEventListener('contextmenu', (e) => {
+      if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
+      e.preventDefault();
+      showToast('🔒 Đã khóa menu chuột phải để bảo vệ bản quyền tác giả!');
+    });
+
+    document.addEventListener('copy', (e) => {
+      if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
+      e.preventDefault();
+      showToast('🔒 Nội dung bài viết độc quyền VIP • Nghiêm cấm sao chép!');
+    });
+
+    document.addEventListener('cut', (e) => {
+      if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
+      e.preventDefault();
+    });
+
+    document.addEventListener('dragstart', (e) => {
+      if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
+      e.preventDefault();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      const isCtrl = e.ctrlKey || e.metaKey;
+      const key = e.key ? e.key.toLowerCase() : '';
+
+      if (e.keyCode === 123 || e.key === 'F12') {
+        e.preventDefault();
+        showToast('🔒 Chức năng kiểm tra mã nguồn (DevTools) đã bị vô hiệu hóa.');
+        return;
+      }
+
+      if (isCtrl && e.shiftKey && ['i', 'j', 'c'].includes(key)) {
+        e.preventDefault();
+        showToast('🔒 Chức năng kiểm tra mã nguồn (DevTools) đã bị vô hiệu hóa.');
+        return;
+      }
+
+      if (isCtrl && key === 'u') {
+        e.preventDefault();
+        showToast('🔒 Xem mã nguồn trang đã bị khóa.');
+        return;
+      }
+
+      if (isCtrl && key === 's') {
+        e.preventDefault();
+        showToast('🔒 Chức năng tải/lưu trang đã bị khóa để bảo vệ bản quyền.');
+        return;
+      }
+
+      if (isCtrl && key === 'p') {
+        e.preventDefault();
+        showToast('🔒 Chức năng in bài viết đã bị vô hiệu hóa.');
+        return;
+      }
+
+      if (isCtrl && key === 'c') {
+        if (!['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+          e.preventDefault();
+          showToast('🔒 Nội dung độc quyền VIP • Nghiêm cấm sao chép!');
+        }
+      }
+
+      if (isCtrl && key === 'a') {
+        if (!['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+          e.preventDefault();
+        }
+      }
+
+      if (isCtrl && key === 'k') {
+        e.preventDefault();
+        openSearchModal();
+      }
+
+      if (e.key === 'Escape') {
+        closeLightbox();
+        closeSearchModal();
+        closeEditModal();
+        closeNewPostModal();
+        closeRenamePartsModal();
+      }
+    });
+
+    window.addEventListener('scroll', () => {
+      const docH = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = (window.scrollY / (docH || 1)) * 100;
+      document.getElementById('reading-progress').style.width = Math.min(100, Math.max(0, pct)) + '%';
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      applySavedEdits();
+      checkAuth();
+      renderSidebar();
+      renderContent();
+    });
+  </script>
+
+  <!-- SECURITY TOAST NOTICE -->
+  <div id="toastNotice" class="toast-notice"></div>
+</body>
+</html>
